@@ -18,7 +18,7 @@ export class StudentsController {
     const students = await this.studentService.getStudents();
     return students;
   }
-  @Get('/:id')
+  @Get(':id')
   async getStudent(@Param('id') id: string) {
     const student = await this.studentService.getStudentByID(id);
     return student;

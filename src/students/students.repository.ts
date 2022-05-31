@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Student } from './student.model';
 
 @Injectable()
-export class StudentRepository {
+export class StudentsRepository {
   constructor(@InjectModel('Student') private studentModel: Model<Student>) {}
 
   async getStudents() {

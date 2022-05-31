@@ -1,50 +1,26 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Student } from './student.model';
-
+import { Injectable } from '@nestjs/common';
+import { StudentsRepository } from './students.repository';
 @Injectable()
 export class StudentsService {
-  constructor(@InjectModel('Student') private studentModel: Model<Student>) {}
+  constructor(public messagesRepo: StudentsRepository) {}
 
-  async getStudents() {
-    const students = await this.studentModel.find();
-    return students.map((prod) => ({
-      id: prod.id,
-      name: prod.name,
-      age: prod.age,
-    }));
+  getStudents() {
+    return this.messagesRepo.getStudents();
   }
 
-  async getStudentByID(studentId: string) {
-    let student;
-    try {
-      student = await this.studentModel.findById(studentId).exec();
-    } catch (error) {
-      throw new NotFoundException('Could not find student.');
-    }
-    if (!student) {
-      throw new NotFoundException('Could not find student.');
-    }
-    return { id: student.id, name: student.name, age: student.age };
+  getStudentByID(studentId: string) {
+    return this.messagesRepo.getStudentByID(studentId);
   }
 
   async addStudent(name: string, age: number) {
-    const newStudent = new this.studentModel({ name, age });
-    const resultID = await newStudent.save(); // saves to database
-    console.log(resultID);
-    return 'saved to database successfully';
+    return this.messagesRepo.addStudent(name, age);
   }
 
   async updateStudent(id: string, studentName: string, studentAge: number) {
-    const updatedStudent = await this.studentModel
-      .updateOne({ _id: id }, { name: studentName, age: studentAge })
-      .exec();
-    return updatedStudent;
+    return this.messagesRepo.updateStudent(id, studentName, studentAge);
   }
 
   async deleteStudent(id: string) {
-    await this.studentModel.deleteOne({ _id: id }).exec();
-    return 'success';
+    return this.messagesRepo.deleteStudent(id);
   }
 }
