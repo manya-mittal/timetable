@@ -14,7 +14,7 @@ export class StudentsController {
   constructor(public studentService: StudentsService) {}
 
   @Get()
-  async getAllStrudents() {
+  async getAllStudents() {
     const students = await this.studentService.getStudents();
     return students;
   }
@@ -35,20 +35,20 @@ export class StudentsController {
 
   @Patch(':id')
   async updateStudent(
-    @Param('id') StudentId: string,
+    @Param('id') studentId: string,
     @Body('name') studentName: string,
     @Body('age') studentAge: number,
   ) {
     return await this.studentService.updateStudent(
-      StudentId,
+      studentId,
       studentName,
       studentAge,
     );
   }
 
   @Delete(':id')
-  async deleteStudent(@Param('id') StudentId: string) {
-    await this.studentService.deleteStudent(StudentId);
+  async deleteStudent(@Param('id') studentId: string) {
+    await this.studentService.deleteStudent(studentId);
     return null;
   }
 }

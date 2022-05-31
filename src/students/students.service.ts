@@ -2,25 +2,25 @@ import { Injectable } from '@nestjs/common';
 import { StudentsRepository } from './students.repository';
 @Injectable()
 export class StudentsService {
-  constructor(public messagesRepo: StudentsRepository) {}
+  constructor(public studentsRepo: StudentsRepository) {}
 
   getStudents() {
-    return this.messagesRepo.getStudents();
+    return this.studentsRepo.getStudents();
   }
 
   getStudentByID(studentId: string) {
-    return this.messagesRepo.getStudentByID(studentId);
+    return this.studentsRepo.getStudentByID(studentId);
   }
 
   async addStudent(name: string, age: number) {
-    return this.messagesRepo.addStudent(name, age);
+    return this.studentsRepo.addStudent(name, age);
   }
 
   async updateStudent(id: string, studentName: string, studentAge: number) {
-    return this.messagesRepo.updateStudent(id, studentName, studentAge);
+    return this.studentsRepo.updateStudent(id, studentName, studentAge);
   }
 
   async deleteStudent(id: string) {
-    return this.messagesRepo.deleteStudent(id);
+    return this.studentsRepo.deleteStudent(id);
   }
 }
