@@ -11,7 +11,7 @@ export class Professor {
   name: string;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }] })
-  courses: Course[];
+  courses: Course[]; // an array of Course ids
 }
 
 export const ProfessorSchema = SchemaFactory.createForClass(Professor);
