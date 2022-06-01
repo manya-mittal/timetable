@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Student } from './student.model';
 
 @Injectable()
@@ -13,6 +13,7 @@ export class StudentsRepository {
       id: prod.id,
       name: prod.name,
       age: prod.age,
+      courses: prod.courses,
     }));
   }
 
@@ -29,11 +30,15 @@ export class StudentsRepository {
     return { id: student.id, name: student.name, age: student.age };
   }
 
-  async addStudent(name: string, age: number) {
-    const newStudent = new this.studentModel({ name, age });
+  async addStudent(
+    name: string,
+    age: number,
+    courses: mongoose.Types.ObjectId,
+  ) {
+    const newStudent = new this.studentModel({ name, age, courses });
     const resultID = await newStudent.save(); // saves to database
     console.log(resultID);
-    return 'saved to database successfully';
+    return resultID;
   }
 
   async updateStudent(id: string, studentName: string, studentAge: number) {

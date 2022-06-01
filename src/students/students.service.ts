@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import mongoose from 'mongoose';
 import { StudentsRepository } from './students.repository';
 @Injectable()
 export class StudentsService {
@@ -12,8 +13,12 @@ export class StudentsService {
     return this.studentsRepo.getStudentByID(studentId);
   }
 
-  async addStudent(name: string, age: number) {
-    return this.studentsRepo.addStudent(name, age);
+  async addStudent(
+    name: string,
+    age: number,
+    courses: mongoose.Types.ObjectId,
+  ) {
+    return this.studentsRepo.addStudent(name, age, courses);
   }
 
   async updateStudent(id: string, studentName: string, studentAge: number) {

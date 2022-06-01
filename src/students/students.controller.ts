@@ -7,6 +7,7 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
+import mongoose from 'mongoose';
 import { StudentsService } from './students.service';
 
 @Controller('students')
@@ -28,8 +29,9 @@ export class StudentsController {
   addStudent(
     @Body('name') studentName: string,
     @Body('age') studentAge: number,
+    @Body('courses') courses: mongoose.Types.ObjectId,
   ) {
-    this.studentService.addStudent(studentName, studentAge);
+    this.studentService.addStudent(studentName, studentAge, courses);
     return 'uploaded';
   }
 
