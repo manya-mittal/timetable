@@ -8,6 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import mongoose from 'mongoose';
+import { Course } from 'src/courses/course.schema';
 import { StudentsService } from './students.service';
 
 @Controller('students')
@@ -40,17 +41,19 @@ export class StudentsController {
     @Param('id') studentId: string,
     @Body('name') studentName: string,
     @Body('age') studentAge: number,
+    @Body('courses') courses: [Course],
   ) {
     return await this.studentService.updateStudent(
       studentId,
       studentName,
       studentAge,
+      courses,
     );
   }
 
   @Delete(':id')
   async deleteStudent(@Param('id') studentId: string) {
     await this.studentService.deleteStudent(studentId);
-    return null;
+    return 'deleted';
   }
 }

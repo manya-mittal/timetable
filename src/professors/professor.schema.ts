@@ -3,18 +3,15 @@ import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Course } from 'src/courses/course.schema';
 
-export type StudentDocument = Student & Document;
+export type ProfessorDocument = Professor & Document;
 
 @Schema()
-export class Student {
+export class Professor {
   @Prop()
   name: string;
-
-  @Prop()
-  age: number;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }] })
   courses: Course[];
 }
 
-export const StudentSchema = SchemaFactory.createForClass(Student);
+export const ProfessorSchema = SchemaFactory.createForClass(Professor);

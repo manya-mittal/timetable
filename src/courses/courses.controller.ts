@@ -53,6 +53,6 @@ export class CoursesController {
   @Delete(':id')
   async deleteCourse(@Param('id') courseId: string) {
     await this.courseService.deleteCourse(courseId);
-    return null;
+    return 'deleted';
   }
 }

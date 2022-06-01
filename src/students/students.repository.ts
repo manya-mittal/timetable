@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { Student } from './student.model';
+import { Course } from 'src/courses/course.schema';
+import { Student } from './student.schema';
 
 @Injectable()
 export class StudentsRepository {
@@ -27,7 +28,12 @@ export class StudentsRepository {
     if (!student) {
       throw new NotFoundException('Could not find student.');
     }
-    return { id: student.id, name: student.name, age: student.age };
+    return {
+      id: student.id,
+      name: student.name,
+      age: student.age,
+      courses: student.courses,
+    };
   }
 
   async addStudent(
@@ -36,14 +42,19 @@ export class StudentsRepository {
     courses: mongoose.Types.ObjectId,
   ) {
     const newStudent = new this.studentModel({ name, age, courses });
-    const resultID = await newStudent.save(); // saves to database
-    console.log(resultID);
-    return resultID;
+    const result = await newStudent.save(); // saves to database
+    console.log(result);
+    return result;
   }
 
-  async updateStudent(id: string, studentName: string, studentAge: number) {
+  async updateStudent(
+    id: string,
+    studentName: string,
+    studentAge: number,
+    courses: [Course],
+  ) {
     const updatedStudent = await this.studentModel
-      .updateOne({ _id: id }, { name: studentName, age: studentAge })
+      .updateOne({ _id: id }, { name: studentName, age: studentAge, courses })
       .exec();
     return updatedStudent;
   }
